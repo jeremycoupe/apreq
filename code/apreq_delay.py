@@ -54,13 +54,19 @@ idx=-1
 for month in month_vec:
 	idx+=1
 	df_temp = df[df['month']==month]
+	df_first = df_temp[ df_temp['Num Updates'] == 0 ]
 	df_DAL = df_temp[df_temp['Carrier'] == 'DAL' ]
+	df_DAL_first = df_first[  df_first['Carrier'] == 'DAL']
 	df_AAL = df_temp[df_temp['Carrier'].isin(['AAL','JIA','RPA','ASQ'])]
+	df_AAL_first = df_first[  df_first['Carrier'].isin(['AAL','JIA','RPA','ASQ'])]
 	df_summary.loc[idx,'month'] = month
 	
 	df_summary.loc[idx,'count_aircraft'] = len(df_temp)
 	df_summary.loc[idx,'mean_delay_minutes'] = df_temp['Schedule Delay(s)'].mean() / float(60)
 	df_summary.loc[idx,'std_delay_minutes'] = df_temp['Schedule Delay(s)'].std() / float(60)
+	df_summary.loc[idx,'first_schedule_count'] = len(df_first)
+	df_summary.loc[idx,'first_schedule_mean_delay_minutes'] = df_first['Schedule Delay(s)'].mean() / float(60)
+	df_summary.loc[idx,'first_schedule_std_delay_minutes'] = df_first['Schedule Delay(s)'].std() / float(60)
 	df_summary.loc[idx,'mean_number_updates'] = df_temp['Num Updates'].mean()
 	df_summary.loc[idx,'std_number_updates'] = df_temp['Num Updates'].std()
 	df_summary.loc[idx,'compliance'] = len( df_temp[ (df_temp['compliance'] >= -120)& (df_temp['compliance'] <= 60)] ) / float(len(df_temp))
@@ -68,12 +74,18 @@ for month in month_vec:
 	df_summary.loc[idx,'count_DAL'] = len(df_DAL)
 	df_summary.loc[idx,'DAL_mean_delay_minutes'] = df_DAL['Schedule Delay(s)'].mean() / float(60)
 	df_summary.loc[idx,'DAL_std_delay_minutes'] = df_DAL['Schedule Delay(s)'].std() / float(60)
+	df_summary.loc[idx,'DAL_first_schedule_count'] = len(df_DAL_first)
+	df_summary.loc[idx,'DAL_first_schedule_mean_delay_minutes'] = df_DAL_first['Schedule Delay(s)'].mean() / float(60)
+	df_summary.loc[idx,'DAL_first_schedule_std_delay_minutes'] = df_DAL_first['Schedule Delay(s)'].std() / float(60)
 	df_summary.loc[idx,'DAL_mean_number_updates'] = df_DAL['Num Updates'].mean()
 	df_summary.loc[idx,'DAL_std_number_updates'] = df_DAL['Num Updates'].std()
 	
 	df_summary.loc[idx,'count_AAL'] = len(df_AAL)
 	df_summary.loc[idx,'AAL_mean_delay_minutes'] = df_AAL['Schedule Delay(s)'].mean() / float(60)
 	df_summary.loc[idx,'AAL_std_delay_minutes'] = df_AAL['Schedule Delay(s)'].std() / float(60)
+	df_summary.loc[idx,'AAL_first_schedule_count'] = len(df_AAL_first)
+	df_summary.loc[idx,'AAL_first_schedule_mean_delay_minutes'] = df_AAL_first['Schedule Delay(s)'].mean() / float(60)
+	df_summary.loc[idx,'AAL_first_schedule_std_delay_minutes'] = df_AAL_first['Schedule Delay(s)'].std() / float(60)
 	df_summary.loc[idx,'AAL_mean_number_updates'] = df_AAL['Num Updates'].mean()
 	df_summary.loc[idx,'AAL_std_number_updates'] = df_AAL['Num Updates'].std()
 	
