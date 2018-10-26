@@ -32,6 +32,7 @@ for f in allFiles:
 			df.loc[index_val,'debug_compliance'] = df0.loc[row,'Compliance (minutes)']
 			df.loc[index_val,'Schedule Delay(s)'] = df0.loc[row,'TBFM Assigned Delay (minutes)'] * 60
 			df.loc[index_val,'Carrier'] = str(df0.loc[row,'Callsign'] )[0:3]
+			df.loc[index_val,'Num Updates'] = df0.loc[row,'Number of APREQ Updates']
 df = df.reset_index(drop=True)
 
 for row in range(len(df['Sched Departure Time Zulu'])):
